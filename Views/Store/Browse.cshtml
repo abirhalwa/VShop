@@ -1,0 +1,44 @@
+﻿@model VShop.Models.Category
+
+@{
+    ViewBag.Title = "Browse Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{Html.RenderAction("ProductSearch", "Store");}
+<h2>Browsing Category: @Model.CategoryName</h2>
+
+
+<ul class="product">
+    @foreach (var product in Model.Products)
+    {
+        <li>
+            <a href="@Url.Action("Details", "Store", new { id = product.ProductId })">
+                <div>
+                @if (product.ProductImage == "")
+                {
+                    <img class="productImage" src="~/ProductImages/no-image.jpg" alt="@product.ProductName" class="productImage"  />
+
+                }
+                else
+                {
+                    <img src="~/ProductImages/@product.ProductImage" alt="@product.ProductName" class="productImage" />
+                }
+                </div>
+            <p class="productName">
+
+                @Html.DisplayFor(modelItem => product.ProductName)
+            </p>
+            <p>
+
+               $ @Html.DisplayFor(modelItem => product.Price)
+            </p>
+            </a>
+
+        </li>
+    }
+</ul>
+
+
+
+
+

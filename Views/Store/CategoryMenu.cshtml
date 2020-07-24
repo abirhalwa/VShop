@@ -1,0 +1,9 @@
+﻿@model IEnumerable<VShop.Models.Category>
+
+    @foreach (var category in Model)
+    {
+        <li>
+            @Html.ActionLink(category.CategoryName, "Browse", "Store", new { id = category.CategoryId }, null)
+        </li>
+    }
+

@@ -1,0 +1,125 @@
+﻿@using Microsoft.AspNet.Identity;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="shortcut icon" href="../AdminStyle/img/icons/icon-48x48.png" />
+    <title>Admin - @ViewBag.Title</title>
+    @Styles.Render("~/AdminStyle/css/app.css")
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="wrapper">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-content js-simplebar">
+                <a class="sidebar-brand" href="index.html">
+                    <span class="align-middle">Admin Dashboard</span>
+                </a>
+
+                <ul class="sidebar-nav">
+                    <li class="sidebar-item @(ViewContext.RouteData.Values["Action"].ToString() == "Index" || ViewContext.RouteData.Values["Action"].ToString() =="" ? "active" : "")">
+                        <a class="sidebar-link" href="@Url.Action("Index", "Admin")">
+                            <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item @(ViewContext.RouteData.Values["Action"].ToString() == "ProductIndex" ? "active" : "")">
+                        <a class="sidebar-link" href="@Url.Action("ProductIndex", "Admin")">
+                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">Products</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item @(ViewContext.RouteData.Values["Action"].ToString() == "CategoryIndex" ? "active" : "")">
+                        <a class="sidebar-link" href="@Url.Action("CategoryIndex", "Admin")">
+                            <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Categories</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item @(ViewContext.RouteData.Values["Action"].ToString() == "OrderIndex" ? "active" : "")">
+                        <a class="sidebar-link" href="@Url.Action("OrderIndex", "Admin")">
+                            <i class="align-middle" data-feather="credit-card"></i> <span class="align-middle">Orders</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="@Url.Action("Index", "Home")">
+                            <i class="align-middle" data-feather="credit-card"></i> <span class="align-middle">Back to Store</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="main">
+            <nav class="navbar navbar-expand navbar-light navbar-bg">
+                <a class="sidebar-toggle d-flex">
+                    <i class="hamburger align-self-center"></i>
+                </a>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav navbar-align">
+                        <li class="nav-item dropdown">
+                            <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-toggle="dropdown">
+                                <i class="align-middle" data-feather="settings"></i>
+                            </a>
+
+                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
+                                <span class="text-dark">@User.Identity.Name</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="@Url.Action("ChangePassword", "Manage")"><i class="align-middle mr-1" data-feather="user"></i> Change Password</a>
+                                <div class="dropdown-divider"></div>
+                                @using (Html.BeginForm("LogOff", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="submit" value="Sign out" class="dropdown-item" />
+                                    @*<a class="dropdown-item" href="@Url.Action("LogOff", "Manage")">Sign out</a>*@
+                                }
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="content">
+                <div class="container-fluid p-0">
+                    @RenderBody()
+
+                </div>
+            </main>
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row text-muted">
+                        <div class="col-6 text-left">
+                            <p class="mb-0">
+                                <a href="index.html" class="text-muted"><strong>VShop</strong></a> Copyright &copy; 2020
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    @Scripts.Render("~/AdminStyle/js/vendor.js")
+    @Scripts.Render("~/AdminStyle/js/app.js")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+<script>
+    $(document).ready(function () {
+        $('.sidebar-link').click(function (e) {
+            $('.sidebar-item.active').removeClass('active');
+            var $parent = $(this).parent();
+            $parent.addClass('active');
+        });
+    });
+        const loadFile = function (event) {
+            var image = document.getElementById('Image');
+            image.style.display = "inline";
+            image.src = URL.createObjectURL(event.target.files[0]);
+        };
+   </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+﻿@model PagedList.IPagedList<VShop.Models.Product>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = ViewBag.CurrentFilter;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{Html.RenderAction("ProductSearch", "Store");}
+
+    <div class="productSearchResult">
+        @if(Model.PageCount==0)
+        {
+        <p>
+
+            No results for @ViewBag.CurrentFilter
+          
+
+        </p>
+        <p>
+            Try checking your spelling or use more general terms
+        </p>
+        }
+        else
+        { 
+        <h1>
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount   - of  results for <span>@ViewBag.CurrentFilter</span>
+        </h1>
+     
+
+        <ul >
+
+            @foreach (var product in Model)
+            {
+                <li >
+                    <a href="@Url.Action("Details", "Store", new { id = product.ProductId })">
+
+
+                        <div class="ImageDiv2">
+                        @if (product.ProductImage == "")
+                        {
+                            <img src="~/ProductImages/no-image.jpg" alt="@product.ProductName" style="max-width:350px; max-height:350px" />
+
+                        }
+                        else
+                        {
+                            <img src="~/ProductImages/@product.ProductImage" alt="@product.ProductName" style="max-width:350px; max-height:350px" />
+                        }
+                        </div>
+                        <div>
+                            <h2>
+                                @Html.DisplayFor(modelItem => product.ProductName)
+                            </h2>
+                            <p>
+                               $ @Html.DisplayFor(modelItem => product.Price) 
+                            </p>
+                        </div>
+                    </a>
+
+                </li>
+            }
+
+        </ul>
+
+        <br />
+        <div>  @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter })) </div>
+
+        }
+</div>

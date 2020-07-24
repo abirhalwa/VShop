@@ -1,0 +1,36 @@
+﻿@model VShop.Models.Product
+
+@{
+    ViewBag.Title = "Product - " + Model.ProductName;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{Html.RenderAction("ProductSearch", "Store");}
+<div class="productDetails">
+    @if (Model.ProductImage == "")
+        {
+            <img src="~/ProductImages/no-image.jpg" alt="@Model.ProductName" style="max-width:350px; max-height:350px" />
+
+        }
+        else
+        {
+            <img alt="@Model.ProductName" src="~/ProductImages/@Model.ProductImage" />
+        }
+    <div>
+        <h2>@Model.ProductName</h2>
+
+        <p>
+            <em>Price:</em>
+            <span class="price"> $ @String.Format("{0:F}", Model.Price) 
+            </span> 
+        </p>
+        <p>
+            @Model.Description
+        </p>
+
+        <p class="button">
+            @Html.ActionLink("Add to Cart", "AddToCart", "ShoppingCart", new { id = Model.ProductId }, "")
+        </p>
+    </div>
+
+</div>
+

@@ -1,0 +1,72 @@
+﻿@model IEnumerable<VShop.Models.Product>
+@{
+    ViewBag.Title = "Electronics, Fashion & More";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{Html.RenderAction("ProductSearch", "Store");}
+<div id="themeSlider" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#themeSlider" data-slide-to="0" class="active"></li>
+        <li data-target="#themeSlider" data-slide-to="1"></li>
+        <li data-target="#themeSlider" data-slide-to="2"></li>
+    </ol>
+
+    <div class="carousel-inner">
+        <div class="item active">
+            <div class="imgOverlay"></div>
+            <img style="height:320px;width:100%;" src="~/Images/samsung.jpg" alt="First slide">
+        </div>
+        <div class="item">
+            <div class="imgOverlay"></div>
+            <img style="height:320px;width:100%;" src="~/Images/Tefal.jpg" alt="Second slide">
+
+        </div>
+        <div class="item">
+            <div class="imgOverlay"></div>
+            <img style="height:320px;width:100%;" src="~/Images/Nike.jpg" alt="Third slide">
+        </div>
+    </div>
+
+    <a class="left carousel-control" href="#themeSlider" data-slide="prev">
+        <span class="fa fa-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#themeSlider" data-slide="next">
+        <span class="fa fa-chevron-right"></span>
+    </a>
+</div>
+    <h2>Top Selling Products </h2>
+    <ul class="product">
+
+        @foreach (var product in Model)
+        {
+            <li>
+                <a href="@Url.Action("Details", "Store", new { id = product.ProductId })">
+                    <div>
+                        @if (product.ProductImage == "")
+                        {
+                            <img src="~/ProductImages/no-image.jpg" alt="@product.ProductName" class="productImage" />
+
+                        }
+                        else
+                        {
+                            <img src="~/ProductImages/@product.ProductImage" alt="@product.ProductName" class="productImage" />
+                        }
+                    </div>
+                    <p class="productName">
+
+                        @Html.DisplayFor(modelItem => product.ProductName)
+                    </p>
+                    <p>
+
+                        $ @Html.DisplayFor(modelItem => product.Price)
+                    </p>
+                   
+                </a>
+
+            </li>
+        }
+
+    </ul>
+
+
+

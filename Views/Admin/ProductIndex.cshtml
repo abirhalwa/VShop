@@ -1,0 +1,80 @@
+﻿@using PagedList.Mvc;
+@*@model PagedList.IPagedList<VShop.Models.Product>*@
+@model IEnumerable<VShop.Models.Product>
+@helper Truncate(string input, int length)
+{
+    if (input.Length <= length)
+    {
+        @input
+    }
+    else
+    {
+        @input.Substring(0, length)<text>...</text>
+    }
+}
+@{
+    ViewBag.Title = "View Products";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<h2>View Products</h2>
+<p>
+    @Html.ActionLink("Create New Product", "CreateProduct")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Category Name
+        </th>
+        <th>
+            @*@Html.ActionLink("Product Name", "ProductIndex", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })*@
+            Product Name
+        </th>
+        <th>
+            @*@Html.ActionLink("Date Created", "ProductIndex", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })*@
+            Date
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th>
+            Price
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                @Truncate(item.ProductName, 20)
+            </td>
+            <td>
+                @String.Format("{0:dd/MM/yyyy}", item.CreatedDate)
+            </td>
+            <td>
+                @Truncate(item.Description, 20)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditProduct", new { id = item.ProductId }) |
+                @Html.ActionLink("Delete", "DeleteProduct", new { id = item.ProductId })
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+@*@Html.PagedListPager(Model, page => Url.Action("ProductIndex", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@
+
+

@@ -1,0 +1,7 @@
+﻿
+@using (Html.BeginForm("Index", "Store", FormMethod.Get, new { @class = "searchForm" }))
+{
+    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control search", placeholder = "Search for products" })
+
+    <button class="searchButton" type="submit" value="Search"><i class="fas fa-search"></i></button>
+}
